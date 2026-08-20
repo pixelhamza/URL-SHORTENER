@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkSnap | URL Shortener</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="brand-title">LinkSnap</span>
+      </div>
+      <div class="status-indicator">
+        <span class="status-dot"></span>
+        <span id="serverInfo">Online</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <div class="intro">
+      <h1>URL Shortener & QR Generator</h1>
+      <p class="subtitle">Enter a long URL to generate a short link and QR code.</p>
+    </div>
+
+    <!-- Shorten Form -->
+    <div class="card form-card">
+      <form id="shortenForm">
+        <div class="form-group">
+          <label for="originalUrl">Target URL</label>
+          <div class="input-with-action">
+            <input type="url" id="originalUrl" placeholder="https://example.com/long-url" required autocomplete="off">
+            <button type="button" id="pasteBtn" class="btn-text">Paste</button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="titleInput">Title (optional)</label>
+            <input type="text" id="titleInput" placeholder="My Link" autocomplete="off">
+          </div>
+          <div class="form-group flex-1">
+            <label for="customCode">Custom Alias (optional)</label>
+            <input type="text" id="customCode" placeholder="alias" pattern="[a-zA-Z0-9-_]+" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="submitBtn" class="btn btn-primary">
+            <span class="btn-text">Shorten URL</span>
+            <span class="btn-loader" style="display: none;">Generating...</span>
+          </button>
+        </div>
+      </form>
+
+      <div id="formAlert" class="alert" style="display: none;"></div>
+    </div>
+
+    <!-- Result Box -->
+    <div id="resultSection" class="card result-box" style="display: none;">
+      <div class="result-layout">
+        <div class="result-info">
+          <div class="result-header">
+            <span class="badge-success">Created</span>
+            <span id="resTitle" class="result-name">Link Title</span>
+          </div>
+          <p id="resOriginal" class="result-target">https://example.com</p>
+
+          <div class="link-output-group">
+            <input type="text" id="resShortUrl" readonly>
+            <button id="copyResBtn" class="btn btn-secondary">Copy</button>
+            <a id="testResBtn" href="#" target="_blank" class="btn btn-secondary">Visit</a>
+          </div>
+        </div>
+
+        <div class="result-qr">
+          <img id="resQrImage" src="" alt="QR Code">
+          <a id="downloadQrBtn" href="" download="qr-code.png" class="btn-link">Download QR</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-number" id="statTotalLinks">0</span>
+        <span class="stat-name">Total Links</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="statTotalClicks">0</span>
+        <span class="stat-name">Total Clicks</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="statUptime">0m</span>
+        <span class="stat-name">Service Uptime</span>
+      </div>
+    </div>
+
+    <!-- Links Table -->
+    <div class="section-title-row">
+      <h2>Recent Links</h2>
+      <button id="refreshBtn" class="btn-text">Refresh</button>
+    </div>
+
+    <div class="card table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Name & Target</th>
+            <th>Short Link</th>
+            <th>Clicks</th>
+            <th>Date</th>
+            <th>QR</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="linksTableBody">
+          <tr>
+            <td colspan="6" class="text-center empty">No links created yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- QR Modal -->
+  <div id="qrModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">QR Code</h3>
+        <button class="modal-close" id="closeModalBtn">&times;</button>
+      </div>
+      <p id="modalShortUrl" class="modal-subtitle">http://localhost:3000/code</p>
+      <div class="modal-qr-container">
+        <img id="modalQrImg" src="" alt="QR Code">
+      </div>
+      <div class="modal-footer">
+        <a id="modalDownloadBtn" href="" download="qr-code.png" class="btn btn-primary full-width">Download Image</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>LinkSnap Service</span>
+      <a href="/health" target="_blank" class="footer-link">Health Check (/health)</a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
