@@ -1,0 +1,19 @@
+{
+  "name": "ec2-url-shortener",
+  "version": "1.0.0",
+  "description": "A modern URL Shortener and QR Code Generator built for Docker & AWS EC2 deployment.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["docker", "ec2", "url-shortener", "qrcode", "express"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "qrcode": "^1.5.4"
+  }
+}
