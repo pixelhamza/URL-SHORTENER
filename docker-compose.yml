@@ -1,0 +1,16 @@
+services:
+  url-shortener:
+    build: .
+    container_name: linksnap-service
+    restart: unless-stopped
+    ports:
+      - "80:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+    volumes:
+      - linksnap-data:/app/data
+
+volumes:
+  linksnap-data:
+    driver: local
